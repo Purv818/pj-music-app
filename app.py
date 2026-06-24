@@ -38,8 +38,9 @@ def create_token(user_id, role):
 
 def decode_token(token):
     try:
-        return jwt.decode(token, JWT_SECRET, algorithms=['HS256'])
-    except:
+        data = jwt.decode(token, JWT_SECRET, algorithms=['HS256'])
+        return data
+    except Exception as e:
         return None
 
 def token_required(f):
