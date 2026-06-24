@@ -1,0 +1,23 @@
+<!-- 
+  Android APK mein ye permissions AndroidManifest.xml mein add karni hain.
+  Path: android/app/src/main/AndroidManifest.xml
+  <manifest> tag ke andar add karo.
+-->
+
+<!-- Internet access (backend + WebSocket) -->
+<uses-permission android:name="android.permission.INTERNET" />
+
+<!-- Android 12 aur neeche ke liye music files read karna -->
+<uses-permission 
+    android:name="android.permission.READ_EXTERNAL_STORAGE"
+    android:maxSdkVersion="32" />
+
+<!-- Android 13+ ke liye sirf audio files read karna -->
+<uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
+<!-- Haptic feedback -->
+<uses-permission android:name="android.permission.VIBRATE" />
+
+<!-- Background playback ke liye foreground service -->
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />

@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block title %}BusMS - Book Bus Tickets Online{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Travel Smarter, <span class="highlight">Book Faster</span></h1>
+        <p>Search and book bus tickets across hundreds of routes. Safe, comfortable, and affordable.</p>
+
+        <div class="search-card">
+            <h2><i class="fas fa-search"></i> Find Your Bus</h2>
+            <form class="search-form" id="heroSearchForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i> From</label>
+                        <input type="text" id="heroSource" placeholder="Enter source city" required>
+                    </div>
+                    <button type="button" class="swap-btn" onclick="swapCities()">
+                        <i class="fas fa-exchange-alt"></i>
+                    </button>
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i> To</label>
+                        <input type="text" id="heroDest" placeholder="Enter destination city" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar"></i> Date</label>
+                        <input type="date" id="heroDate" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg btn-full">
+                    <i class="fas fa-search"></i> Search Buses
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="hero-image">
+        <div class="hero-bus-illustration">
+            <i class="fas fa-bus-alt"></i>
+        </div>
+    </div>
+</section>
+
+<!-- Popular Routes -->
+<section class="section popular-routes">
+    <div class="container">
+        <h2 class="section-title">Popular Routes</h2>
+        <p class="section-subtitle">Most booked routes by our passengers</p>
+        <div class="routes-grid" id="popularRoutes">
+            <div class="route-card" onclick="quickSearch('Mumbai','Delhi')">
+                <div class="route-icon"><i class="fas fa-route"></i></div>
+                <div class="route-info"><span class="route-from">Mumbai</span><i class="fas fa-arrow-right"></i><span class="route-to">Delhi</span></div>
+                <span class="route-via"><i class="fas fa-map-signs"></i> via Ahmedabad, Jaipur</span>
+                <span class="route-distance">1400 km</span><span class="route-price">From ₹1180</span>
+            </div>
+            <div class="route-card" onclick="quickSearch('Bangalore','Chennai')">
+                <div class="route-icon"><i class="fas fa-route"></i></div>
+                <div class="route-info"><span class="route-from">Bangalore</span><i class="fas fa-arrow-right"></i><span class="route-to">Chennai</span></div>
+                <span class="route-distance">350 km</span><span class="route-price">From ₹430</span>
+            </div>
+            <div class="route-card" onclick="quickSearch('Delhi','Jaipur')">
+                <div class="route-icon"><i class="fas fa-route"></i></div>
+                <div class="route-info"><span class="route-from">Delhi</span><i class="fas fa-arrow-right"></i><span class="route-to">Jaipur</span></div>
+                <span class="route-distance">270 km</span><span class="route-price">From ₹350</span>
+            </div>
+            <div class="route-card" onclick="quickSearch('Mumbai','Goa')">
+                <div class="route-icon"><i class="fas fa-route"></i></div>
+                <div class="route-info"><span class="route-from">Mumbai</span><i class="fas fa-arrow-right"></i><span class="route-to">Goa</span></div>
+                <span class="route-via"><i class="fas fa-map-signs"></i> via Ratnagiri</span>
+                <span class="route-distance">590 km</span><span class="route-price">From ₹670</span>
+            </div>
+            <div class="route-card" onclick="quickSearch('Hyderabad','Bangalore')">
+                <div class="route-icon"><i class="fas fa-route"></i></div>
+                <div class="route-info"><span class="route-from">Hyderabad</span><i class="fas fa-arrow-right"></i><span class="route-to">Bangalore</span></div>
+                <span class="route-distance">570 km</span><span class="route-price">From ₹650</span>
+            </div>
+            <div class="route-card" onclick="quickSearch('Delhi','Amritsar')">
+                <div class="route-icon"><i class="fas fa-route"></i></div>
+                <div class="route-info"><span class="route-from">Delhi</span><i class="fas fa-arrow-right"></i><span class="route-to">Amritsar</span></div>
+                <span class="route-via"><i class="fas fa-map-signs"></i> via Ludhiana</span>
+                <span class="route-distance">450 km</span><span class="route-price">From ₹530</span>
+            </div>
+            <div class="route-card" onclick="quickSearch('Mumbai','Pune')">
+                <div class="route-icon"><i class="fas fa-route"></i></div>
+                <div class="route-info"><span class="route-from">Mumbai</span><i class="fas fa-arrow-right"></i><span class="route-to">Pune</span></div>
+                <span class="route-distance">150 km</span><span class="route-price">From ₹230</span>
+            </div>
+            <div class="route-card" onclick="quickSearch('Kolkata','Bhubaneswar')">
+                <div class="route-icon"><i class="fas fa-route"></i></div>
+                <div class="route-info"><span class="route-from">Kolkata</span><i class="fas fa-arrow-right"></i><span class="route-to">Bhubaneswar</span></div>
+                <span class="route-distance">440 km</span><span class="route-price">From ₹520</span>
+            </div>
+            <div class="route-card" onclick="quickSearch('Chennai','Madurai')">
+                <div class="route-icon"><i class="fas fa-route"></i></div>
+                <div class="route-info"><span class="route-from">Chennai</span><i class="fas fa-arrow-right"></i><span class="route-to">Madurai</span></div>
+                <span class="route-via"><i class="fas fa-map-signs"></i> via Trichy</span>
+                <span class="route-distance">460 km</span><span class="route-price">From ₹540</span>
+            </div>
+            <div class="route-card" onclick="quickSearch('Delhi','Kolkata')">
+                <div class="route-icon"><i class="fas fa-route"></i></div>
+                <div class="route-info"><span class="route-from">Delhi</span><i class="fas fa-arrow-right"></i><span class="route-to">Kolkata</span></div>
+                <span class="route-via"><i class="fas fa-map-signs"></i> via Varanasi, Patna</span>
+                <span class="route-distance">1500 km</span><span class="route-price">From ₹1580</span>
+            </div>
+            <div class="route-card" onclick="quickSearch('Bangalore','Goa')">
+                <div class="route-icon"><i class="fas fa-route"></i></div>
+                <div class="route-info"><span class="route-from">Bangalore</span><i class="fas fa-arrow-right"></i><span class="route-to">Goa</span></div>
+                <span class="route-via"><i class="fas fa-map-signs"></i> via Hubli</span>
+                <span class="route-distance">590 km</span><span class="route-price">From ₹670</span>
+            </div>
+            <div class="route-card" onclick="quickSearch('Indore','Mumbai')">
+                <div class="route-icon"><i class="fas fa-route"></i></div>
+                <div class="route-info"><span class="route-from">Indore</span><i class="fas fa-arrow-right"></i><span class="route-to">Mumbai</span></div>
+                <span class="route-via"><i class="fas fa-map-signs"></i> via Surat</span>
+                <span class="route-distance">590 km</span><span class="route-price">From ₹670</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="section features">
+    <div class="container">
+        <h2 class="section-title">Why Choose BusMS?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Safe & Secure</h3>
+                <p>All transactions are encrypted and your data is protected with industry-standard security.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-ticket-alt"></i></div>
+                <h3>Instant Booking</h3>
+                <p>Book your seat in seconds and get instant confirmation with e-ticket.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-rupee-sign"></i></div>
+                <h3>Best Prices</h3>
+                <p>Compare prices across multiple buses and get the best deal for your journey.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                <h3>24/7 Support</h3>
+                <p>Our customer support team is available round the clock to assist you.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats -->
+<section class="section stats-section">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Routes</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">100+</span>
+                <span class="stat-label">Buses</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">10K+</span>
+                <span class="stat-label">Happy Passengers</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">99%</span>
+                <span class="stat-label">On-Time Rate</span>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Set min date to today
+    document.getElementById('heroDate').min = new Date().toISOString().split('T')[0];
+    document.getElementById('heroDate').value = new Date().toISOString().split('T')[0];
+
+    document.getElementById('heroSearchForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const source = document.getElementById('heroSource').value.trim();
+        const dest = document.getElementById('heroDest').value.trim();
+        const date = document.getElementById('heroDate').value;
+        if (source && dest) {
+            window.location.href = `/search?source=${encodeURIComponent(source)}&destination=${encodeURIComponent(dest)}&date=${date}`;
+        }
+    });
+
+    function swapCities() {
+        const src = document.getElementById('heroSource');
+        const dst = document.getElementById('heroDest');
+        [src.value, dst.value] = [dst.value, src.value];
+    }
+
+    function quickSearch(source, dest) {
+        const date = new Date().toISOString().split('T')[0];
+        window.location.href = `/search?source=${encodeURIComponent(source)}&destination=${encodeURIComponent(dest)}&date=${date}`;
+    }
+</script>
+{% endblock %}

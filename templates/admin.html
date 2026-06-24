@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - BusMS{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-page">
+    <div class="dashboard-sidebar">
+        <div class="sidebar-user">
+            <div class="user-avatar admin-avatar"><i class="fas fa-user-shield"></i></div>
+            <div class="user-info">
+                <span class="user-name" id="sidebarName">Admin</span>
+                <span class="user-role">Administrator</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="sidebar-link active" data-tab="overview"><i class="fas fa-chart-line"></i> Overview</a>
+            <a href="#" class="sidebar-link" data-tab="buses"><i class="fas fa-bus"></i> Buses</a>
+            <a href="#" class="sidebar-link" data-tab="routes"><i class="fas fa-route"></i> Routes</a>
+            <a href="#" class="sidebar-link" data-tab="schedules"><i class="fas fa-calendar-alt"></i> Schedules</a>
+            <a href="#" class="sidebar-link" data-tab="bookings"><i class="fas fa-ticket-alt"></i> Bookings</a>
+            <a href="#" class="sidebar-link" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </div>
+
+    <div class="dashboard-main">
+
+        <!-- Overview Tab -->
+        <div class="tab-content active" id="tab-overview">
+            <div class="page-header"><h1>Dashboard Overview</h1></div>
+            <div class="stats-cards" id="statsCards">
+                <div class="stat-card blue"><div class="stat-icon"><i class="fas fa-ticket-alt"></i></div><div class="stat-info"><span class="stat-val" id="statBookings">-</span><span class="stat-lbl">Total Bookings</span></div></div>
+                <div class="stat-card green"><div class="stat-icon"><i class="fas fa-rupee-sign"></i></div><div class="stat-info"><span class="stat-val" id="statRevenue">-</span><span class="stat-lbl">Total Revenue</span></div></div>
+                <div class="stat-card orange"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><span class="stat-val" id="statUsers">-</span><span class="stat-lbl">Total Users</span></div></div>
+                <div class="stat-card purple"><div class="stat-icon"><i class="fas fa-bus"></i></div><div class="stat-info"><span class="stat-val" id="statBuses">-</span><span class="stat-lbl">Total Buses</span></div></div>
+                <div class="stat-card teal"><div class="stat-icon"><i class="fas fa-map-marker-alt"></i></div><div class="stat-info"><span class="stat-val" id="statLocations">-</span><span class="stat-lbl">Locations</span></div></div>
+                <div class="stat-card red"><div class="stat-icon"><i class="fas fa-route"></i></div><div class="stat-info"><span class="stat-val" id="statRoutes">-</span><span class="stat-lbl">Distinct Routes</span></div></div>
+            </div>
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>Monthly Bookings</h3>
+                    <canvas id="bookingsChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Popular Routes</h3>
+                    <canvas id="routesChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Monthly Revenue (₹)</h3>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buses Tab -->
+        <div class="tab-content hidden" id="tab-buses">
+            <div class="page-header">
+                <h1>Manage Buses</h1>
+                <button class="btn btn-primary" onclick="openModal('busModal')"><i class="fas fa-plus"></i> Add Bus</button>
+            </div>
+            <div class="table-card">
+                <table class="data-table" id="busesTable">
+                    <thead><tr><th>ID</th><th>Bus Number</th><th>Capacity</th><th>Type</th><th>Actions</th></tr></thead>
+                    <tbody id="busesBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Routes Tab -->
+        <div class="tab-content hidden" id="tab-routes">
+            <div class="page-header">
+                <h1>Manage Routes</h1>
+                <button class="btn btn-primary" onclick="openModal('routeModal')"><i class="fas fa-plus"></i> Add Route</button>
+            </div>
+            <div class="table-card">
+                <table class="data-table" id="routesTable">
+                    <thead><tr><th>ID</th><th>Source</th><th>Destination</th><th>Distance (km)</th><th>Actions</th></tr></thead>
+                    <tbody id="routesBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Schedules Tab -->
+        <div class="tab-content hidden" id="tab-schedules">
+            <div class="page-header">
+                <h1>Manage Schedules</h1>
+                <button class="btn btn-primary" onclick="openModal('scheduleModal')"><i class="fas fa-plus"></i> Add Schedule</button>
+            </div>
+            <div class="table-card">
+                <table class="data-table">
+                    <thead><tr><th>ID</th><th>Bus</th><th>Route</th><th>Date</th><th>Departure</th><th>Arrival</th><th>Price</th><th>Actions</th></tr></thead>
+                    <tbody id="schedulesBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Bookings Tab -->
+        <div class="tab-content hidden" id="tab-bookings">
+            <div class="page-header"><h1>All Bookings</h1></div>
+            <div class="table-card">
+                <table class="data-table">
+                    <thead><tr><th>ID</th><th>Passenger</th><th>Route</th><th>Date</th><th>Bus</th><th>Seat</th><th>Price</th><th>Status</th></tr></thead>
+                    <tbody id="allBookingsBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bus Modal -->
+<div class="modal hidden" id="busModal">
+    <div class="modal-overlay" onclick="closeModal('busModal')"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="busModalTitle">Add Bus</h2>
+            <button class="modal-close" onclick="closeModal('busModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <form id="busForm" onsubmit="saveBus(event)">
+            <input type="hidden" id="busId">
+            <div class="form-group">
+                <label>Bus Number</label>
+                <input type="text" id="busNumber" placeholder="e.g. MH-01-AB-1234" required>
+            </div>
+            <div class="form-group">
+                <label>Capacity</label>
+                <input type="number" id="busCapacity" placeholder="e.g. 40" min="10" max="60" required>
+            </div>
+            <div class="form-group">
+                <label>Type</label>
+                <select id="busType" required>
+                    <option value="AC">AC</option>
+                    <option value="Non-AC">Non-AC</option>
+                    <option value="Sleeper">Sleeper</option>
+                    <option value="Semi-Sleeper">Semi-Sleeper</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-outline" onclick="closeModal('busModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Bus</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Route Modal -->
+<div class="modal hidden" id="routeModal">
+    <div class="modal-overlay" onclick="closeModal('routeModal')"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add Route</h2>
+            <button class="modal-close" onclick="closeModal('routeModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <form id="routeForm" onsubmit="saveRoute(event)">
+            <div class="form-group">
+                <label>Source City</label>
+                <input type="text" id="routeSource" placeholder="e.g. Mumbai" required>
+            </div>
+            <div class="form-group">
+                <label>Destination City</label>
+                <input type="text" id="routeDest" placeholder="e.g. Pune" required>
+            </div>
+            <div class="form-group">
+                <label>Distance (km)</label>
+                <input type="number" id="routeDistance" placeholder="e.g. 150" min="1" required>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-outline" onclick="closeModal('routeModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Route</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Schedule Modal -->
+<div class="modal hidden" id="scheduleModal">
+    <div class="modal-overlay" onclick="closeModal('scheduleModal')"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add Schedule</h2>
+            <button class="modal-close" onclick="closeModal('scheduleModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <form id="scheduleForm" onsubmit="saveSchedule(event)">
+            <div class="form-group">
+                <label>Bus</label>
+                <select id="scheduleBus" required></select>
+            </div>
+            <div class="form-group">
+                <label>Route</label>
+                <select id="scheduleRoute" required></select>
+            </div>
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="scheduleDate" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Departure Time</label>
+                    <input type="time" id="scheduleDep" required>
+                </div>
+                <div class="form-group">
+                    <label>Arrival Time</label>
+                    <input type="time" id="scheduleArr" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Price (₹)</label>
+                <input type="number" id="schedulePrice" placeholder="e.g. 350" min="1" required>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-outline" onclick="closeModal('scheduleModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Schedule</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/admin.js"></script>
+{% endblock %}

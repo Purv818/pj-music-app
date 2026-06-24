@@ -1,0 +1,42 @@
+<!--
+  ══════════════════════════════════════════════════════════════════
+  PJ Music App — Android Permissions
+  
+  KAHAN ADD KARO:
+  File: android/app/src/main/AndroidManifest.xml
+  Location: <manifest> tag ke andar, <application> tag se PEHLE
+  ══════════════════════════════════════════════════════════════════
+-->
+
+<!-- Internet (backend + WebSocket) -->
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+<!-- Audio files read karna — Android 12 aur neeche -->
+<uses-permission
+    android:name="android.permission.READ_EXTERNAL_STORAGE"
+    android:maxSdkVersion="32" />
+
+<!-- Audio files read karna — Android 13+ -->
+<uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
+<!-- Vibration (haptic feedback) -->
+<uses-permission android:name="android.permission.VIBRATE" />
+
+<!-- Background audio playback -->
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+
+<!-- Wake lock (screen band hone ke baad bhi audio chale) -->
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+
+<!--
+  ══════════════════════════════════════════════════════════════════
+  Application tag ke ANDAR ye bhi add karo:
+  ══════════════════════════════════════════════════════════════════
+  
+  <service
+      android:name=".AudioPlayerService"
+      android:foregroundServiceType="mediaPlayback"
+      android:exported="false" />
+-->

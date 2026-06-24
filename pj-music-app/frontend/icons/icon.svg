@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="100" fill="#0f0f1a"/>
+  <rect width="512" height="512" rx="100" fill="url(#g)"/>
+  <defs>
+    <radialGradient id="g" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#0f0f1a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Music note -->
+  <path d="M200 140 v160 c-12-8-26-12-42-12 -35 0-62 25-62 56s27 56 62 56 62-25 62-56V196l140-28v120 c-12-8-26-12-42-12 -35 0-62 25-62 56s27 56 62 56 62-25 62-56V112L200 140z"
+        fill="#a855f7"/>
+</svg>

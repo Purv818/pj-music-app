@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block title %}Book Seat - BusMS{% endblock %}
+
+{% block content %}
+<div class="booking-page">
+    <div class="container">
+
+        <div class="booking-header">
+            <a href="/search" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Results</a>
+            <h1><i class="fas fa-couch"></i> Select Your Seat</h1>
+        </div>
+
+        <div id="loadingState" class="state-box">
+            <i class="fas fa-spinner fa-spin fa-2x"></i>
+            <p>Loading seat map...</p>
+        </div>
+
+        <div id="bookingContent" class="booking-layout hidden">
+
+            <!-- ── Bus Info Strip ── -->
+            <div class="bus-info-card" id="busInfoCard"></div>
+
+            <!-- ── Main: Seat Map + Summary ── -->
+            <div class="booking-body">
+
+                <!-- Seat Section -->
+                <div class="seat-section">
+
+                    <!-- Legend -->
+                    <div class="seat-legend">
+                        <span class="legend-item"><span class="seat-demo available"></span> Available</span>
+                        <span class="legend-item"><span class="seat-demo booked"></span> Booked</span>
+                        <span class="legend-item"><span class="seat-demo selected"></span> Your Seat</span>
+                    </div>
+
+                    <!-- Bus Shell -->
+                    <div class="bus-shell">
+
+                        <!-- Roof bar -->
+                        <div class="bus-roof">
+                            <span class="bus-roof-label"><i class="fas fa-bus"></i> BusMS Express</span>
+                            <span class="bus-number-plate" id="busPlate">—</span>
+                        </div>
+
+                        <!-- Windshield + Driver -->
+                        <div class="bus-cockpit">
+                            <div class="windshield">
+                                <div class="wiper left"></div>
+                                <div class="wiper right"></div>
+                            </div>
+                            <div class="cockpit-row">
+                                <div class="driver-seat">
+                                    <i class="fas fa-steering-wheel"></i>
+                                    <span>Driver</span>
+                                </div>
+                                <div class="door-icon">
+                                    <i class="fas fa-door-open"></i>
+                                    <span>Entry</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Seat Grid -->
+                        <div class="bus-interior">
+                            <!-- Column headers -->
+                            <div class="seat-col-headers">
+                                <span>A</span>
+                                <span>B</span>
+                                <span class="aisle-header"><i class="fas fa-arrows-alt-h"></i></span>
+                                <span>C</span>
+                                <span>D</span>
+                            </div>
+                            <div class="seats-grid" id="seatsContainer"></div>
+                        </div>
+
+                        <!-- Bus rear -->
+                        <div class="bus-rear">
+                            <div class="rear-window"></div>
+                        </div>
+                    </div>
+
+                    <!-- Seat count badges -->
+                    <div class="seat-counts" id="seatCounts"></div>
+                </div>
+
+                <!-- Booking Summary -->
+                <div class="booking-summary">
+                    <div class="summary-header">
+                        <i class="fas fa-receipt"></i>
+                        <h3>Booking Summary</h3>
+                    </div>
+
+                    <div class="summary-body">
+                        <div class="summary-row">
+                            <span><i class="fas fa-route"></i> Route</span>
+                            <span id="summaryRoute">—</span>
+                        </div>
+                        <div class="summary-row">
+                            <span><i class="fas fa-calendar"></i> Date</span>
+                            <span id="summaryDate">—</span>
+                        </div>
+                        <div class="summary-row">
+                            <span><i class="fas fa-clock"></i> Departure</span>
+                            <span id="summaryDep">—</span>
+                        </div>
+                        <div class="summary-row">
+                            <span><i class="fas fa-bus"></i> Bus</span>
+                            <span id="summaryBus">—</span>
+                        </div>
+                        <div class="summary-row">
+                            <span><i class="fas fa-tag"></i> Type</span>
+                            <span id="summaryType">—</span>
+                        </div>
+                    </div>
+
+                    <div class="selected-seat-box" id="selectedSeatBox">
+                        <div class="selected-seat-icon"><i class="fas fa-couch"></i></div>
+                        <div>
+                            <div class="selected-seat-label">Selected Seat</div>
+                            <div class="selected-seat-num" id="summarySeat">None</div>
+                        </div>
+                    </div>
+
+                    <div class="summary-total">
+                        <span>Total Amount</span>
+                        <span id="summaryTotal">₹ —</span>
+                    </div>
+
+                    <div id="alertBox" class="alert hidden"></div>
+
+                    <button class="btn btn-primary btn-full" id="bookBtn" onclick="confirmBooking()" disabled>
+                        <i class="fas fa-ticket-alt"></i> Confirm Booking
+                    </button>
+
+                    <p class="booking-note">
+                        <i class="fas fa-shield-alt"></i> Secure booking &bull; Cancel anytime from dashboard
+                    </p>
+                </div>
+
+            </div><!-- /booking-body -->
+        </div><!-- /bookingContent -->
+    </div>
+</div>
+
+<!-- Seat Tooltip -->
+<div class="seat-tooltip" id="seatTooltip"></div>
+{% endblock %}
+
+{% block extra_js %}
+<script>const SCHEDULE_ID = {{ schedule_id | tojson }};</script>
+<script src="/static/js/booking.js"></script>
+{% endblock %}

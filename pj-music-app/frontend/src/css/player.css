@@ -1,0 +1,225 @@
+/**
+ * Full Player Styles
+ */
+
+.full-player {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+}
+
+.full-player.hidden {
+  display: none;
+}
+
+.full-player__backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-overlay);
+  cursor: pointer;
+}
+
+.full-player__sheet {
+  position: relative;
+  width: 100%;
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  padding: var(--spacing-md) var(--spacing-lg) calc(var(--spacing-xl) + var(--safe-area-bottom));
+  max-height: 94vh;
+  overflow-y: auto;
+  animation: slide-up var(--transition-base) ease-out;
+}
+
+.full-player__drag-handle {
+  width: 40px;
+  height: 4px;
+  background: var(--border-color);
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--spacing-sm);
+}
+
+.full-player__close {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+}
+
+/* Artwork */
+.full-player__artwork-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 320px;
+  margin: var(--spacing-lg) auto var(--spacing-lg);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.full-player__artwork {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-xl);
+  position: relative;
+  z-index: 1;
+}
+
+.full-player__artwork-bg {
+  position: absolute;
+  inset: -20px;
+  background: var(--bg-elevated);
+  filter: blur(20px) saturate(1.5);
+  opacity: 0.6;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Info row */
+.full-player__info {
+  margin-bottom: var(--spacing-lg);
+}
+
+.full-player__title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.full-player__title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.full-player__artist {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.fav-btn.active {
+  color: var(--color-primary);
+}
+
+.fav-btn.active svg {
+  fill: var(--color-primary);
+  stroke: var(--color-primary);
+}
+
+/* Progress */
+.full-player__progress {
+  margin-bottom: var(--spacing-lg);
+}
+
+.seek-bar, .volume-bar {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  outline: none;
+  cursor: pointer;
+}
+
+.seek-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  cursor: pointer;
+  box-shadow: 0 0 4px rgba(168, 85, 247, 0.5);
+}
+
+.volume-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text-secondary);
+  cursor: pointer;
+}
+
+.full-player__time {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+/* Controls */
+.full-player__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+}
+
+.control-btn {
+  width: 48px;
+  height: 48px;
+  color: var(--text-primary);
+}
+
+.control-btn svg {
+  width: 28px;
+  height: 28px;
+}
+
+.play-pause-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.5);
+  transition: transform var(--transition-fast);
+}
+
+.play-pause-btn:active {
+  transform: scale(0.93);
+}
+
+.play-pause-btn svg {
+  width: 32px;
+  height: 32px;
+}
+
+#fp-shuffle[data-active="true"],
+#fp-repeat[data-mode="one"],
+#fp-repeat[data-mode="all"] {
+  color: var(--color-primary);
+}
+
+/* Volume */
+.full-player__volume {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* Mini player play button */
+.mini-player .play-btn {
+  width: 36px;
+  height: 36px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  color: white;
+}
+
+.mini-player .play-btn svg {
+  width: 18px;
+  height: 18px;
+}

@@ -1,0 +1,96 @@
+/**
+ * CSS Custom Properties — Design Tokens
+ * Dark and light theme variables.
+ */
+
+:root {
+  /* ─── Brand ─────────────────────────────────────────────────────── */
+  --color-primary: #a855f7;
+  --color-primary-light: #c084fc;
+  --color-primary-dark: #7c3aed;
+  --color-accent: #06b6d4;
+  --color-success: #22c55e;
+  --color-danger:  #ef4444;
+  --color-warning: #f59e0b;
+
+  /* ─── Dark theme (default) ──────────────────────────────────────── */
+  --bg-base:     #0b0b14;
+  --bg-surface:  #141428;
+  --bg-elevated: #1e1e38;
+  --bg-card:     #181830;
+  --bg-overlay:  rgba(0, 0, 0, 0.80);
+  --bg-glass:    rgba(20, 20, 40, 0.72);
+
+  --text-primary:    #f0f0ff;
+  --text-secondary:  #9090b8;
+  --text-muted:      #55557a;
+  --text-on-primary: #ffffff;
+
+  --border-color:  rgba(255, 255, 255, 0.09);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --border-focus:  rgba(168, 85, 247, 0.6);
+
+  --shadow-sm:  0 2px 8px  rgba(0, 0, 0, 0.45);
+  --shadow-md:  0 4px 24px rgba(0, 0, 0, 0.55);
+  --shadow-lg:  0 8px 48px rgba(0, 0, 0, 0.70);
+  --shadow-glow:0 0 24px   rgba(168, 85, 247, 0.3);
+
+  /* ─── Typography ────────────────────────────────────────────────── */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-size-xs:   0.70rem;
+  --font-size-sm:   0.875rem;
+  --font-size-base: 1rem;
+  --font-size-md:   1.125rem;
+  --font-size-lg:   1.25rem;
+  --font-size-xl:   1.5rem;
+  --font-size-2xl:  1.875rem;
+
+  /* ─── Spacing ───────────────────────────────────────────────────── */
+  --spacing-xs:  4px;
+  --spacing-sm:  8px;
+  --spacing-md:  16px;
+  --spacing-lg:  24px;
+  --spacing-xl:  32px;
+  --spacing-2xl: 48px;
+
+  /* ─── Radii ─────────────────────────────────────────────────────── */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-full: 9999px;
+
+  /* ─── Transitions ───────────────────────────────────────────────── */
+  --transition-fast:  120ms ease;
+  --transition-base:  240ms ease;
+  --transition-slow:  380ms ease;
+
+  /* ─── Layout ────────────────────────────────────────────────────── */
+  --top-bar-height:    56px;
+  --bottom-nav-height: 64px;
+  --mini-player-height:68px;
+  --safe-area-top:    env(safe-area-inset-top,    0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ─── Light theme overrides ─────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg-base:     #f2f2fc;
+  --bg-surface:  #ffffff;
+  --bg-elevated: #e8e8f8;
+  --bg-card:     #ffffff;
+  --bg-overlay:  rgba(0, 0, 0, 0.50);
+  --bg-glass:    rgba(255, 255, 255, 0.80);
+
+  --text-primary:   #12122a;
+  --text-secondary: #44446a;
+  --text-muted:     #8888aa;
+
+  --border-color:  rgba(0, 0, 0, 0.10);
+  --border-subtle: rgba(0, 0, 0, 0.05);
+
+  --shadow-sm:  0 2px 8px  rgba(0, 0, 0, 0.08);
+  --shadow-md:  0 4px 20px rgba(0, 0, 0, 0.12);
+  --shadow-lg:  0 8px 40px rgba(0, 0, 0, 0.18);
+  --shadow-glow:0 0 24px   rgba(168, 85, 247, 0.15);
+}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Search Buses - BusMS{% endblock %}
+
+{% block content %}
+<div class="search-page">
+    <!-- Search Bar -->
+    <div class="search-bar-section">
+        <div class="container">
+            <form class="search-bar-form" id="searchForm">
+                <div class="search-bar-inner">
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i> From</label>
+                        <input type="text" id="source" placeholder="Source city" required>
+                    </div>
+                    <button type="button" class="swap-btn" onclick="swapCities()">
+                        <i class="fas fa-exchange-alt"></i>
+                    </button>
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i> To</label>
+                        <input type="text" id="destination" placeholder="Destination city" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar"></i> Date</label>
+                        <input type="date" id="date">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container search-results-container">
+        <!-- Filters -->
+        <aside class="filters-panel">
+            <h3><i class="fas fa-filter"></i> Filters</h3>
+            <div class="filter-group">
+                <h4>Bus Type</h4>
+                <label class="checkbox-label"><input type="checkbox" value="AC" onchange="applyFilters()"> AC</label>
+                <label class="checkbox-label"><input type="checkbox" value="Non-AC" onchange="applyFilters()"> Non-AC</label>
+                <label class="checkbox-label"><input type="checkbox" value="Sleeper" onchange="applyFilters()"> Sleeper</label>
+                <label class="checkbox-label"><input type="checkbox" value="Semi-Sleeper" onchange="applyFilters()"> Semi-Sleeper</label>
+            </div>
+            <div class="filter-group">
+                <h4>Departure Time</h4>
+                <label class="checkbox-label"><input type="checkbox" value="morning" onchange="applyFilters()"> Morning (6AM-12PM)</label>
+                <label class="checkbox-label"><input type="checkbox" value="afternoon" onchange="applyFilters()"> Afternoon (12PM-6PM)</label>
+                <label class="checkbox-label"><input type="checkbox" value="evening" onchange="applyFilters()"> Evening (6PM-12AM)</label>
+                <label class="checkbox-label"><input type="checkbox" value="night" onchange="applyFilters()"> Night (12AM-6AM)</label>
+            </div>
+            <div class="filter-group">
+                <h4>Price Range</h4>
+                <input type="range" id="priceRange" min="0" max="2000" value="2000" oninput="updatePriceLabel(this.value); applyFilters()">
+                <span id="priceLabel">Up to ₹2000</span>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="clearFilters()">Clear Filters</button>
+        </aside>
+
+        <!-- Results -->
+        <div class="results-panel">
+            <div class="results-header" id="resultsHeader" style="display:none">
+                <span id="resultsCount"></span>
+                <select id="sortBy" onchange="sortResults()">
+                    <option value="price">Sort by Price</option>
+                    <option value="departure">Sort by Departure</option>
+                    <option value="seats">Sort by Seats</option>
+                </select>
+            </div>
+
+            <div id="loadingState" class="state-box hidden">
+                <i class="fas fa-spinner fa-spin fa-2x"></i>
+                <p>Searching buses...</p>
+            </div>
+
+            <div id="emptyState" class="state-box">
+                <i class="fas fa-search fa-3x"></i>
+                <p>Enter source and destination to search buses</p>
+            </div>
+
+            <div id="noResults" class="state-box hidden">
+                <i class="fas fa-bus fa-3x"></i>
+                <p>No buses found for this route</p>
+                <small>Try a different date or route</small>
+            </div>
+
+            <div id="busResults" class="bus-list"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/search.js"></script>
+{% endblock %}

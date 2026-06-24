@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard - BusMS{% endblock %}
+
+{% block content %}
+<div class="dashboard-page">
+    <div class="dashboard-sidebar">
+        <div class="sidebar-user">
+            <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
+            <div class="user-info">
+                <span class="user-name" id="sidebarName">Loading...</span>
+                <span class="user-role">Passenger</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="sidebar-link active" data-tab="bookings">
+                <i class="fas fa-ticket-alt"></i> My Bookings
+            </a>
+            <a href="#" class="sidebar-link" data-tab="profile">
+                <i class="fas fa-user"></i> Profile
+            </a>
+            <a href="/search" class="sidebar-link">
+                <i class="fas fa-search"></i> Search Buses
+            </a>
+            <a href="#" class="sidebar-link" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </nav>
+    </div>
+
+    <div class="dashboard-main">
+        <!-- Bookings Tab -->
+        <div class="tab-content active" id="tab-bookings">
+            <div class="page-header">
+                <h1>My Bookings</h1>
+                <a href="/search" class="btn btn-primary"><i class="fas fa-plus"></i> New Booking</a>
+            </div>
+
+            <div class="booking-filters">
+                <button class="filter-btn active" onclick="filterBookings('all', this)">All</button>
+                <button class="filter-btn" onclick="filterBookings('confirmed', this)">Confirmed</button>
+                <button class="filter-btn" onclick="filterBookings('cancelled', this)">Cancelled</button>
+            </div>
+
+            <div id="bookingsLoading" class="state-box">
+                <i class="fas fa-spinner fa-spin fa-2x"></i>
+                <p>Loading bookings...</p>
+            </div>
+            <div id="bookingsEmpty" class="state-box hidden">
+                <i class="fas fa-ticket-alt fa-3x"></i>
+                <p>No bookings found</p>
+                <a href="/search" class="btn btn-primary">Book Now</a>
+            </div>
+            <div id="bookingsList" class="bookings-list hidden"></div>
+        </div>
+
+        <!-- Profile Tab -->
+        <div class="tab-content hidden" id="tab-profile">
+            <div class="page-header">
+                <h1>My Profile</h1>
+            </div>
+            <div class="profile-card">
+                <div class="profile-avatar"><i class="fas fa-user-circle"></i></div>
+                <div class="profile-details">
+                    <div class="profile-field">
+                        <label>Full Name</label>
+                        <span id="profileName">-</span>
+                    </div>
+                    <div class="profile-field">
+                        <label>Email</label>
+                        <span id="profileEmail">-</span>
+                    </div>
+                    <div class="profile-field">
+                        <label>Role</label>
+                        <span id="profileRole" class="badge">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/dashboard.js"></script>
+{% endblock %}

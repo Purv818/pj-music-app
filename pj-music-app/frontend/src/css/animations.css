@@ -1,0 +1,123 @@
+/**
+ * Keyframe Animations & Transitions
+ */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes slide-down {
+  from { transform: translateY(0); }
+  to   { transform: translateY(100%); }
+}
+
+@keyframes scale-in {
+  from { transform: scale(0.92); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-scale {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.05); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(168,85,247,0.3); }
+  50%       { box-shadow: 0 0 28px rgba(168,85,247,0.7); }
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+@keyframes toast-out {
+  from { opacity: 1; transform: translateY(0)    scale(1); }
+  to   { opacity: 0; transform: translateY(16px) scale(0.95); }
+}
+
+/* Equalizer bars */
+.eq-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+}
+.eq-bar {
+  width: 3px;
+  background: var(--color-primary);
+  border-radius: 2px;
+  animation: eq-animate 0.8s ease-in-out infinite alternate;
+}
+.eq-bar:nth-child(1) { animation-duration: 0.55s; }
+.eq-bar:nth-child(2) { animation-duration: 0.75s; animation-delay: 0.1s; }
+.eq-bar:nth-child(3) { animation-duration: 0.65s; animation-delay: 0.2s; }
+.eq-bar:nth-child(4) { animation-duration: 0.90s; animation-delay: 0.05s; }
+@keyframes eq-animate {
+  from { height: 4px; }
+  to   { height: 16px; }
+}
+
+/* Artwork spin while playing */
+.artwork-spin { animation: spin 8s linear infinite; animation-play-state: paused; }
+.artwork-spin.playing { animation-play-state: running; }
+
+/* Page enter */
+.page-enter { animation: fade-in 0.18s ease; }
+
+/* Skeleton loading */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-elevated) 25%,
+    var(--bg-card) 50%,
+    var(--bg-elevated) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-load 1.6s infinite;
+  border-radius: var(--radius-sm);
+}
+@keyframes skeleton-load {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Ripple on tap */
+.ripple { position: relative; overflow: hidden; }
+.ripple::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  width: 0; height: 0;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  animation: ripple-burst 0.45s ease-out;
+}
+@keyframes ripple-burst {
+  to { width: 220%; height: 220%; opacity: 0; }
+}
+
+/* Shake (error) */
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%,60% { transform: translateX(-6px); }
+  40%,80% { transform: translateX( 6px); }
+}
+.shake { animation: shake 0.35s ease; }
+
+/* Now-playing dot */
+@keyframes now-playing-dot {
+  0%,100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(1.5); opacity: 0.6; }
+}
